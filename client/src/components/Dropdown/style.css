@@ -1,0 +1,35 @@
+.select {
+  width: 100%;
+}
+
+.select select {
+  width: calc(100% - 16px);
+  height: 48px;
+  padding: 0 8px;
+  font-size: 1rem;
+  border: 1px solid var(--borderColor);
+  border-radius: var(--borderRadius);
+  margin: 4px 8px;
+}
+
+.select label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: var(--textColor);
+  margin: 0px 8px;
+}
+
+/* Removing the default arrow */
+.select select {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Custom arrow */
+.select select {
+  background-image: url("../../images/icons/caret-down-light.svg");
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 8px) center;
+}

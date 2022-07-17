@@ -1,0 +1,11 @@
+.sub-heading {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  width: 100%;
+  margin: 12px 8px;
+}
+
+.text-center {
+  text-align: center;
+}

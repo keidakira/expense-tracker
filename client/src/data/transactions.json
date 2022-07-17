@@ -1,0 +1,41 @@
+{
+  "name": "Transactions",
+  "description": "Transactions done by Srinandan Komanduri",
+  "items": [
+    {
+      "year": 2022,
+      "months": [
+        {
+          "month": "June",
+          "transactions": [
+            {
+              "date": "2022-06-01",
+              "transactions": [
+                {
+                  "id": 1,
+                  "date": "2022-06-01",
+                  "account": "Amazon Credit Card",
+                  "credit": 0.0,
+                  "debit": 59.6,
+                  "running_balance": 833.22,
+                  "category": "Grocery",
+                  "notes": "Amazon Fresh"
+                },
+                {
+                  "id": 2,
+                  "date": "2022-06-01",
+                  "account": "Bank of America Debit Card",
+                  "credit": 0.0,
+                  "debit": 200.6,
+                  "running_balance": 13998.97,
+                  "category": "Stock Market",
+                  "notes": "Bought S&P 500 stocks (2)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

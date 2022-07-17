@@ -1,0 +1,40 @@
+.table {
+  border-collapse: collapse;
+}
+
+.table thead {
+  border-bottom: 2px solid var(--borderColor);
+  border-top: 2px solid var(--borderColor);
+}
+
+.table tr {
+  border-bottom: 1px solid var(--borderColor);
+}
+
+.table td,
+.table th {
+  width: 6%;
+  padding: 12px;
+  text-align: center;
+  border-right: 1px solid var(--borderColor);
+  border-left: 1px solid var(--borderColor);
+}
+
+.table td[name="account"],
+.table th[name="account"] {
+  width: 10%;
+}
+
+.table td[name="notes"],
+.table th[name="notes"] {
+  width: 18%;
+}
+
+.table td[name="credit"],
+.table td[name="debit"],
+.table td[name="balance"],
+.table th[name="credit"],
+.table th[name="debit"],
+.table th[name="balance"] {
+  text-align: right;
+}

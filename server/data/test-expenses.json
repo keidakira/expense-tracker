@@ -1,0 +1,18 @@
+[
+  {
+    "date": "2022/06/01",
+    "credit": "0",
+    "debit": "59.60",
+    "category": "Grocery",
+    "account": "Amazon Credit Card",
+    "notes": "Amazon Fresh"
+  },
+  {
+    "date": "2022-05-01",
+    "credit": "0",
+    "debit": "200",
+    "category": "Stock Market",
+    "account": "Bank of America Debit Card",
+    "notes": "Bought S&P 500"
+  }
+]

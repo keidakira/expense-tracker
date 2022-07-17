@@ -1,0 +1,26 @@
+button {
+  width: 180px;
+  height: 48px;
+  font-size: 1rem;
+  background-color: var(--primaryColor);
+  border-radius: var(--borderRadius);
+  border: none;
+  margin: 4px 8px;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--primaryColorHover);
+}
+
+.full-width {
+  width: calc(100% - 16px);
+}
+
+.is-loading {
+  cursor: not-allowed;
+  pointer-events: none;
+  background: var(--disabledBackground);
+  color: var(--disabledColor);
+}

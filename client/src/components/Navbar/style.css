@@ -1,0 +1,39 @@
+.navbar {
+  background: white;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-logo a {
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  color: var(--primaryColor);
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 1rem;
+  margin: 0 1rem;
+  align-items: center;
+}
+
+.navbar-menu a {
+  text-decoration: none;
+  color: var(--primaryColor);
+  padding: 0.8rem 1.6rem;
+  border-radius: var(--borderRadius);
+}
+
+.navbar-menu .active {
+  background-color: var(--primaryColorHoverGlass);
+}

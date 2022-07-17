@@ -1,0 +1,43 @@
+.transactions-selection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--borderColor);
+}
+
+.add-transaction {
+  position: fixed;
+  bottom: 8px;
+  right: 8px;
+}
+
+td[name="actions"] {
+  border-right: none;
+  width: calc(100% - 24px);
+  font-size: small;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+td[name="actions"] span {
+  cursor: pointer;
+}
+
+td[name="actions"] span:hover {
+  text-decoration: underline;
+}
+
+td[name="actions"] span[name="edit"] {
+  color: blue;
+}
+
+td[name="actions"] span[name="delete"] {
+  color: red;
+}
+
+/* Balances List */
+.balances-list {
+  padding: 2rem;
+}

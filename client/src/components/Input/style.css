@@ -1,0 +1,27 @@
+.input {
+  width: 100%;
+}
+
+input {
+  width: calc(100% - 16px);
+  height: 48px;
+  border: 1px solid var(--borderColor);
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease-in-out;
+  margin: 4px 8px;
+  padding: 0px 8px;
+  box-sizing: border-box;
+}
+
+input:focus {
+  border-color: var(--primaryColor);
+}
+
+.input label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: var(--textColor);
+  margin: 0px 8px;
+}

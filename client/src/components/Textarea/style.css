@@ -1,0 +1,29 @@
+.textarea {
+  width: 100%;
+}
+
+textarea {
+  width: calc(100% - 16px);
+  height: 80px;
+  border: 1px solid var(--borderColor);
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease-in-out;
+  margin: 4px 8px;
+  padding: 4px 8px;
+  box-sizing: border-box;
+  resize: none;
+}
+
+textarea:focus {
+  border-color: var(--primaryColor);
+}
+
+.textarea label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: var(--textColor);
+  margin: 0px 8px;
+}
