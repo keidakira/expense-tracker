@@ -8,6 +8,7 @@ const { configuration } = require("./config/config");
 app.use(
   cors({
     origin: "http://localhost:3000",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   })
 );
 app.use(express.json());
