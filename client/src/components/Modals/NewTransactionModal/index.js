@@ -8,8 +8,10 @@ import Dropdown from "../../Dropdown";
 import categories from "../../../data/categories.json";
 
 import { getNewDate } from "../../../utils/date";
+import { HOST } from "../../../utils/constants";
 
-const userId = "62cfc9d9bfcca9c77c0a012f";
+const user = localStorage.getItem("user");
+const userId = user ? JSON.parse(user).id : null;
 
 export const NewTransactionModal = ({
   isModalOpen,
@@ -31,7 +33,7 @@ export const NewTransactionModal = ({
   const clearForm = () => {
     // Get all cards of the user
     const getUserCards = async (userId) => {
-      const response = await fetch(`http://localhost:8081/api/users/${userId}`);
+      const response = await fetch(`${HOST}/api/users/${userId}`);
 
       const user = await response.json();
       return user.accounts;
@@ -90,7 +92,7 @@ export const NewTransactionModal = ({
       notes: notes,
     };
 
-    let response = await fetch("http://localhost:8081/api/expenses", {
+    let response = await fetch(`${HOST}/api/expenses`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

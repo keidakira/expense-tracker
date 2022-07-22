@@ -7,7 +7,7 @@ import IconButton from "../../components/IconButton";
 import addIcon from "../../images/icons/add-400.svg";
 import "./style.css";
 
-import { months, years } from "../../utils/constants";
+import { HOST, months, years } from "../../utils/constants";
 import { formatMoney } from "../../utils/mathf";
 import { formatDateToString } from "../../utils/date";
 import { NewTransactionModal } from "../../components/Modals/NewTransactionModal";
@@ -47,9 +47,7 @@ function Expenses() {
     }
 
     const fetchData = async () => {
-      await fetch(
-        `http://localhost:8081/api/expenses/${selectedYear}/${selectedMonth}`
-      )
+      await fetch(`${HOST}/api/expenses/${selectedYear}/${selectedMonth}`)
         .then((res) => res.json())
         .then(
           (result) => {
@@ -60,7 +58,7 @@ function Expenses() {
           }
         );
 
-      await fetch(`http://localhost:8081/api/users/${userId}`)
+      await fetch(`${HOST}/api/users/${userId}`)
         .then((res) => res.json())
         .then((result) => {
           setUserAccounts(result.accounts);
