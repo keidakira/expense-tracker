@@ -6,6 +6,7 @@ import { useRef } from "react";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import SubHeading from "../../components/SubHeading";
+import { HOST } from "../../utils/constants";
 
 import "./style.css";
 
@@ -44,7 +45,7 @@ const Login = () => {
     disableButton();
 
     // Fetch request to /api/auth/login
-    fetch("http://localhost:8081/api/auth/login", {
+    fetch(`${HOST}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
