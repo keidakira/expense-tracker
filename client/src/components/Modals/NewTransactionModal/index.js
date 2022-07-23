@@ -11,7 +11,7 @@ import { getNewDate } from "../../../utils/date";
 import { HOST } from "../../../utils/constants";
 
 const user = localStorage.getItem("user");
-const userId = user ? JSON.parse(user).id : null;
+const userId = user ? JSON.parse(user).userId : null;
 
 export const NewTransactionModal = ({
   isModalOpen,
