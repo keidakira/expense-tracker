@@ -9,7 +9,7 @@ import Login from "./pages/Login";
 import Expenses from "./pages/Expenses";
 
 // External Libraries
-import { BrowserRouter, Routes, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Logout from "./pages/Logout";
 
 const App = () => {
