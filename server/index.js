@@ -7,7 +7,7 @@ const { configuration } = require("./config/config");
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: process.env.CORS_ORIGIN,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   })
 );
