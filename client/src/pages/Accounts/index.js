@@ -12,10 +12,12 @@ import "./styles.css";
 import { HOST } from "../../utils/constants";
 import { formatMoney } from "../../utils/mathf";
 import IconButton from "../../components/IconButton";
+import { NewAccountModal } from "../../components/Modals/NewAccountModal";
 
 const Accounts = () => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,7 +62,7 @@ const Accounts = () => {
           <tbody>
             {user.accounts.map((account) => {
               return (
-                <tr>
+                <tr key={account.card._id}>
                   <td>{account.card.name}</td>
                   <td>$ {formatMoney(account.initial_balance)}</td>
                   <td>$ {formatMoney(account.balance)}</td>
@@ -74,10 +76,15 @@ const Accounts = () => {
         </table>
       </div>
       <div className="add-account">
-        <IconButton icon={addIcon}>
+        <IconButton icon={addIcon} onClick={(e) => setIsModalOpen(true)}>
           <span>Add Account</span>
         </IconButton>
       </div>
+      <NewAccountModal
+        isModalOpen={isModalOpen}
+        toggleModal={setIsModalOpen}
+        afterModalClose={() => window.location.reload()}
+      />
     </div>
   );
 };
