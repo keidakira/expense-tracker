@@ -30,11 +30,15 @@ const userSchema = new mongoose.Schema({
         ref: "Card",
       },
       balance: {
-        type: Number,
+        type: mongoose.Types.Decimal128,
         required: true,
       },
       initial_balance: {
-        type: Number,
+        type: mongoose.Types.Decimal128,
+        required: true,
+      },
+      date: {
+        type: Date,
         required: true,
       },
     },

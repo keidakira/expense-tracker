@@ -44,7 +44,6 @@ router.post("/", (req, res) => {
   }
 
   const { password } = req.body;
-  const salt = process.env.SALT;
   let encryptedPassword = sha256(md5(password, true));
 
   const newUser = new User({
@@ -98,6 +97,7 @@ router.put("/:id/add-account", (req, res) => {
         card: req.body.account.card,
         balance: req.body.account.balance,
         initial_balance: req.body.account.balance,
+        date: req.body.account.date,
       });
       user.save().then((user) => res.json(user));
     })
