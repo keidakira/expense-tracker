@@ -1,0 +1,15 @@
+.accounts-container {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.actions {
+  font-size: small;
+  color: var(--primaryColor);
+}
+
+.actions span:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
