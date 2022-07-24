@@ -45,6 +45,7 @@ router.post("/", (req, res) => {
     name: req.body.name,
     company: req.body.company,
     type: req.body.type,
+    color: req.body.color,
   });
   newCard
     .save()

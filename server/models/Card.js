@@ -6,6 +6,7 @@
  * - name: name of the card
  * - company: company associated with the card
  * - type: type of the card (Credit, Debit, etc.)
+ * - color: Background color for the card
  */
 const mongoose = require("mongoose");
 
@@ -19,6 +20,10 @@ const cardSchema = new mongoose.Schema({
     required: true,
   },
   type: {
+    type: String,
+    required: true,
+  },
+  color: {
     type: String,
     required: true,
   },
