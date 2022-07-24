@@ -18,14 +18,6 @@ const { sha256, md5 } = require("../utils/encryption");
  * @returns [Users]
  */
 router.get("/", (req, res) => {
-  const { password } = req.body;
-  if (password !== process.env.ADMIN_PASSWORD) {
-    return res.status(401).json({
-      error: true,
-      message: "Invalid authentication",
-    });
-  }
-
   User.find()
     .populate("accounts.card")
     .then((users) => res.json(users))
@@ -52,7 +44,6 @@ router.post("/", (req, res) => {
   }
 
   const { password } = req.body;
-  const salt = process.env.SALT;
   let encryptedPassword = sha256(md5(password, true));
 
   const newUser = new User({
@@ -76,14 +67,6 @@ router.post("/", (req, res) => {
  * @returns User
  */
 router.get("/:id", (req, res) => {
-  const password = "poop";
-  if (password !== process.env.ADMIN_PASSWORD) {
-    return res.status(401).json({
-      error: true,
-      message: "Invalid authentication",
-    });
-  }
-
   User.findById(req.params.id)
     .populate("accounts.card")
     .then((user) => res.json(user))
@@ -114,6 +97,7 @@ router.put("/:id/add-account", (req, res) => {
         card: req.body.account.card,
         balance: req.body.account.balance,
         initial_balance: req.body.account.balance,
+        date: req.body.account.date,
       });
       user.save().then((user) => res.json(user));
     })

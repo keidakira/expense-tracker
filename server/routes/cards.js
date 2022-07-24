@@ -17,14 +17,6 @@ const Card = require("../models/Card");
  * @returns [Cards]
  */
 router.get("/", (req, res) => {
-  const { password } = req.body;
-  if (password !== process.env.ADMIN_PASSWORD) {
-    return res.status(401).json({
-      error: true,
-      message: "Invalid authentication",
-    });
-  }
-
   Card.find()
     .then((cards) => res.json(cards))
     .catch((err) =>
@@ -53,6 +45,7 @@ router.post("/", (req, res) => {
     name: req.body.name,
     company: req.body.company,
     type: req.body.type,
+    color: req.body.color,
   });
   newCard
     .save()
@@ -70,14 +63,6 @@ router.post("/", (req, res) => {
  * @returns Card
  */
 router.get("/:id", (req, res) => {
-  const { password } = req.body;
-  if (password !== process.env.ADMIN_PASSWORD) {
-    return res.status(401).json({
-      error: true,
-      message: "Invalid authentication",
-    });
-  }
-
   Card.findById(req.params.id)
     .then((card) => res.json(card))
     .catch((err) =>
