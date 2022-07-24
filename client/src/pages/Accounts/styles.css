@@ -13,3 +13,9 @@
   cursor: pointer;
   text-decoration: underline;
 }
+
+.add-account {
+  position: fixed;
+  bottom: 8px;
+  right: 8px;
+}

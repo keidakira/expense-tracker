@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 
 // Custom components
 import Navbar from "../../components/Navbar";
+import addIcon from "../../images/icons/add-400.svg";
 
 // Stylesheet
 import "./styles.css";
@@ -10,6 +11,7 @@ import "./styles.css";
 // Utils
 import { HOST } from "../../utils/constants";
 import { formatMoney } from "../../utils/mathf";
+import IconButton from "../../components/IconButton";
 
 const Accounts = () => {
   const [user, setUser] = useState(null);
@@ -70,6 +72,11 @@ const Accounts = () => {
             })}
           </tbody>
         </table>
+      </div>
+      <div className="add-account">
+        <IconButton icon={addIcon}>
+          <span>Add Account</span>
+        </IconButton>
       </div>
     </div>
   );
