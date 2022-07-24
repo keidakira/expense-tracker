@@ -11,6 +11,7 @@ import Expenses from "./pages/Expenses";
 // External Libraries
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Logout from "./pages/Logout";
+import Accounts from "./pages/Accounts";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/expenses" element={<Expenses />} />
+        <Route path="/accounts" element={<Accounts />} />
         <Route path="/logout" element={<Logout />} />
       </Routes>
     </BrowserRouter>

@@ -8,7 +8,7 @@ import logo from "../../images/logo.png";
 
 import "./style.css";
 
-const Navbar = () => {
+const Navbar = ({ active }) => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -19,12 +19,12 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="navbar-menu">
-          <Link to="/expenses" className="active">
+          <Link to="/expenses" className={active === "expenses" && "active"}>
             <span className="navbar-menu-button">Expenses</span>
           </Link>
-          {/* <Link to="/accounts">
+          <Link to="/accounts" className={active === "accounts" && "active"}>
             <span className="navbar-menu-button">Accounts</span>
-          </Link> */}
+          </Link>
           <Link to="/logout">
             <span className="navbar-menu-button">Logout</span>
           </Link>
