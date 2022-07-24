@@ -29,6 +29,15 @@ code {
   text-align: right;
 }
 
+.text-center {
+  text-align: center;
+}
+
+.hcenter-div {
+  display: flex;
+  justify-content: center;
+}
+
 /* Variables */
 :root {
   --primaryColor: #a074ff;

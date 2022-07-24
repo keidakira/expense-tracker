@@ -11,7 +11,6 @@ import { HOST, months, years } from "../../utils/constants";
 import { formatMoney } from "../../utils/mathf";
 import { formatDateToString } from "../../utils/date";
 import { NewTransactionModal } from "../../components/Modals/NewTransactionModal";
-import Login from "../Login";
 import { useRef } from "react";
 import Navbar from "../../components/Navbar";
 
@@ -28,8 +27,6 @@ function Expenses() {
   const [userId, setUserId] = useState(null);
 
   const getTransactionsButtonRef = useRef(null);
-
-  const currentPage = window.location.pathname;
 
   // Check if user is logged in
   if (!window.localStorage.getItem("token")) {
@@ -104,17 +101,13 @@ function Expenses() {
     setGetTransactions(!getTransactions);
   };
 
-  if (currentPage === "/login") {
-    return <Login />;
-  }
-
   if (userId === null) {
     return;
   }
 
   return (
     <div className="App">
-      <Navbar />
+      <Navbar active="expenses" />
       <div className="transactions-selection">
         <Dropdown
           onChange={handleMonthChange}
