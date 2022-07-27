@@ -13,7 +13,7 @@ const loginUser = async (req, res, next) => {
   const { data: user, success, message } = await userDAL.getUserByEmail(email);
 
   if (!success) {
-    return apiResponse.error(res, HTTP_STATUS.NOT_FOUND, message);
+    return apiResponse.error(res, HTTP_STATUS.BAD_REQUEST, message);
   }
 
   const isPasswordCorrect = await userDAL.verifyPasswordWithEmail(
@@ -22,7 +22,7 @@ const loginUser = async (req, res, next) => {
   );
 
   if (!isPasswordCorrect) {
-    return apiResponse.error(res, HTTP_STATUS.UNAUTHORIZED, "Invalid password");
+    return apiResponse.error(res, HTTP_STATUS.BAD_REQUEST, "Invalid password");
   }
 
   return apiResponse.success(

@@ -8,6 +8,11 @@ const User = require("./userModel");
 const {
   generateErrorMessageFromModelError,
 } = require("../../helpers/errorHandler");
+const {
+  getNewDate,
+  getTomorrowDate,
+  isDate1BeforeDate2,
+} = require("../../utils/date");
 
 // Data abstraction functions
 const generateUserObjectFromModelObject = (userModelObject) => {
@@ -108,6 +113,37 @@ const addAccount = async (id, account) => {
         data: null,
         success: false,
         message: "User does not exist",
+      };
+    }
+
+    const balanceDate = account.dateOfInitialBalance;
+    const currentDate = getTomorrowDate();
+
+    if (!isDate1BeforeDate2(balanceDate, currentDate)) {
+      return {
+        data: null,
+        success: false,
+        message: [
+          {
+            name: "dateOfInitialBalance",
+            message: "dateOfInitialBalance cannot be in the future",
+          },
+        ],
+      };
+    }
+
+    let doesUserAlreadyHaveAccount = false;
+    user.accounts.forEach((userAccount) => {
+      if (userAccount.accountId.toString() === account.accountId) {
+        doesUserAlreadyHaveAccount = true;
+      }
+    });
+
+    if (doesUserAlreadyHaveAccount) {
+      return {
+        data: null,
+        success: false,
+        message: "User already has an account with this accountId",
       };
     }
 

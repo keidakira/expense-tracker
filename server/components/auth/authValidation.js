@@ -16,7 +16,10 @@ const loginUser = (req, res, next) => {
       "string.empty": "email cannot be empty",
       "string.email": "email is invalid",
     }),
-    password: Joi.string().required(),
+    password: Joi.string().required().messages({
+      "any.required": "password is required",
+      "string.empty": "password cannot be empty",
+    }),
   });
 
   const { error } = schema.validate(req.body, { abortEarly: false });

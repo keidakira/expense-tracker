@@ -78,14 +78,15 @@ const addAccount = (req, res, next) => {
         "string.empty": "accountId cannot be empty",
         "string.pattern.base": "accountId is not a valid ObjectId",
       }),
-    initialBalance: Joi.number().precision(2).required().messages({
+    initialBalance: Joi.number().positive().precision(2).required().messages({
       "any.required": "initialBalance is a required field",
       "number.empty": "initialBalance cannot be empty",
       "number.precision": "initialBalance must have 2 decimal places",
+      "number.positive": "initialBalance must be positive",
     }),
-    dateOfInitialBalance: Joi.date().required().less("now").messages({
+    dateOfInitialBalance: Joi.date().required().iso().messages({
       "any.required": "dateOfInitialBalance is a required field",
-      "date.less": "dateOfInitialBalance cannot be in the future",
+      "date.iso": "dateOfInitialBalance must be in ISO format",
     }),
   });
 
