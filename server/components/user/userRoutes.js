@@ -35,8 +35,8 @@ router
 router
   .route("/:id/expenses")
   .post(
-    expenseValidation.createExpense,
     userValidation.createExpense,
+    expenseValidation.createExpense,
     userController.userExists,
     userController.userHasAccount,
     expenseController.createExpense

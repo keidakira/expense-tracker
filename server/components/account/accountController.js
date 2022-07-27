@@ -13,7 +13,7 @@ const accountExists = async (req, res, next) => {
   const account = await accountDAL.accountExists(accountId);
 
   if (!account) {
-    return apiResponse.error(res, HTTP_STATUS.NOT_FOUND, "Account not found");
+    return apiResponse.error(res, HTTP_STATUS.BAD_REQUEST, "Account not found");
   }
 
   next();

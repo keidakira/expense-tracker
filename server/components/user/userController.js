@@ -16,7 +16,7 @@ const userExists = async (req, res, next) => {
   const doesExist = await userDAL.userExists(id);
 
   if (!doesExist) {
-    return apiResponse.error(res, HTTP_STATUS.NOT_FOUND, "User not found");
+    return apiResponse.error(res, HTTP_STATUS.BAD_REQUEST, "User not found");
   }
 
   next();

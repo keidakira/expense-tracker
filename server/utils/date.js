@@ -19,7 +19,28 @@ const formatDateToString = (dateString) => {
 
 const getNewDate = () => {
   let date = new Date();
-  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+
+  month = month < 10 ? `0${month}` : month;
+  day = day < 10 ? `0${day}` : day;
+
+  return `${year}-${month}-${day}T00:00:00.000Z`;
+};
+
+const getTomorrowDate = () => {
+  let date = new Date();
+  date.setDate(date.getDate() + 1);
+
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+
+  month = month < 10 ? `0${month}` : month;
+  day = day < 10 ? `0${day}` : day;
+
+  return `${year}-${month}-${day}T00:00:00.000Z`;
 };
 
 const getStartAndEndDatesOfYearAndMonth = (year, month) => {
@@ -32,9 +53,18 @@ const getStartAndEndDatesOfYearAndMonth = (year, month) => {
   };
 };
 
+const isDate1BeforeDate2 = (date1, date2) => {
+  let date1Object = dateObjectFromString(date1);
+  let date2Object = dateObjectFromString(date2);
+
+  return date1Object < date2Object;
+};
+
 module.exports = {
   dateObjectFromString,
   formatDateToString,
   getNewDate,
+  getTomorrowDate,
   getStartAndEndDatesOfYearAndMonth,
+  isDate1BeforeDate2,
 };
