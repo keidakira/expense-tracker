@@ -9,7 +9,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "mocha --exit"
+    "test": "mocha --exit",
+    "create-component": "bash ./scripts/create-component.sh"
   },
   "author": "",
   "license": "ISC",
@@ -18,10 +19,12 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "mocha": "^10.0.0",
     "mongoose": "^6.4.0",
-    "supertest": "^6.2.3"
+    "supertest": "^6.2.3",
+    "validator": "^13.7.0"
   },
   "engines": {
     "node": ">=16.13.2"

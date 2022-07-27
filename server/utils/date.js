@@ -22,8 +22,19 @@ const getNewDate = () => {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 };
 
+const getStartAndEndDatesOfYearAndMonth = (year, month) => {
+  let startDate = new Date(year, month - 1, 1);
+  let endDate = new Date(year, month, 0);
+
+  return {
+    startDate,
+    endDate,
+  };
+};
+
 module.exports = {
   dateObjectFromString,
   formatDateToString,
   getNewDate,
+  getStartAndEndDatesOfYearAndMonth,
 };
