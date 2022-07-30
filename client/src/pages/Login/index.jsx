@@ -16,7 +16,7 @@ const Login = () => {
   const buttonRef = useRef(null);
 
   // Check if user is logged in
-  if (window.localStorage.getItem("token")) {
+  if (window.localStorage.getItem("user")) {
     window.location.href = "/expenses";
     return;
   }
@@ -59,9 +59,8 @@ const Login = () => {
       .then((res) => {
         if (!res.error) {
           // Set token in localStorage
-          const { token, userId, email } = res.data;
-          localStorage.setItem("token", token);
-          localStorage.setItem("user", JSON.stringify({ userId, email }));
+          const data = res.data;
+          localStorage.setItem("user", JSON.stringify(data));
 
           // Redirect to /expenses
           window.location.href = "/expenses";

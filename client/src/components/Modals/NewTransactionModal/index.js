@@ -11,7 +11,7 @@ import { getNewDate } from "../../../utils/date";
 import { HOST } from "../../../utils/constants";
 
 const user = localStorage.getItem("user");
-const userId = user ? JSON.parse(user).userId : null;
+const userId = user ? JSON.parse(user).id : null;
 
 export const NewTransactionModal = ({
   isModalOpen,
@@ -35,8 +35,8 @@ export const NewTransactionModal = ({
     const getUserCards = async (userId) => {
       const response = await fetch(`${HOST}/api/users/${userId}`);
 
-      const user = await response.json();
-      return user.accounts;
+      const { data } = await response.json();
+      return data.accounts;
     };
 
     getUserCards(userId).then((accounts) => {
