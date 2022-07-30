@@ -8,7 +8,7 @@ import { getNewDate } from "../../../utils/date";
 import { HOST } from "../../../utils/constants";
 
 const user = localStorage.getItem("user");
-const userId = user ? JSON.parse(user).userId : null;
+const userId = user ? JSON.parse(user).id : null;
 
 export const NewAccountModal = ({
   isModalOpen,
@@ -27,18 +27,18 @@ export const NewAccountModal = ({
   const clearForm = () => {
     // Get all cards of the user
     const getUserCards = async () => {
-      const response = await fetch(`${HOST}/api/cards`);
+      const response = await fetch(`${HOST}/api/accounts`);
 
       return await response.json();
     };
 
     getUserCards(userId).then((accounts) => {
-      setAccounts(accounts);
+      setAccounts(accounts.data);
     });
 
     // Clear the form
     setCredit("");
-    setAccount(accounts.length > 0 ? accounts[0]._id : "");
+    setAccount(accounts.length > 0 ? accounts[0].id : "");
     setSelectedDate(getNewDate());
   };
 
@@ -64,15 +64,14 @@ export const NewAccountModal = ({
 
   const addAccountToUser = async () => {
     const transaction = {
-      account: {
-        card: account,
-        balance: credit,
-      },
-      password: "poop",
+      accountId: account,
+      initialBalance: credit,
+      dateOfInitialBalance: selectedDate,
     };
+    console.log(transaction);
 
-    let response = await fetch(`${HOST}/api/users/${userId}/add-account`, {
-      method: "PUT",
+    let response = await fetch(`${HOST}/api/users/${userId}/accounts`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -103,7 +102,7 @@ export const NewAccountModal = ({
           value={account}
         >
           {accounts.map((account, index) => (
-            <option key={index} value={account._id}>
+            <option key={index} value={account.id}>
               {account.name}
             </option>
           ))}

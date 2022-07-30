@@ -16,11 +16,21 @@ const {
 
 // Data abstraction functions
 const generateUserObjectFromModelObject = (userModelObject) => {
+  const accounts = userModelObject.accounts.map((account) => {
+    return {
+      accountId: account.accountId._id,
+      accountName: account.accountId.name,
+      initialBalance: account.initialBalance,
+      currentBalance: account.currentBalance,
+      dateOfInitialBalance: account.dateOfInitialBalance,
+    };
+  });
+
   return {
     id: userModelObject._id,
     name: userModelObject.name,
     email: userModelObject.email,
-    accounts: userModelObject.accounts,
+    accounts,
   };
 };
 
@@ -63,7 +73,9 @@ const createUser = async (user) => {
 
 const getUser = async (id) => {
   try {
-    const user = await User.findById(id, fieldsToOmit);
+    const user = await User.findById(id, fieldsToOmit).populate(
+      "accounts.accountId"
+    );
     return {
       data: generateUserObjectFromModelObject(user),
       success: true,

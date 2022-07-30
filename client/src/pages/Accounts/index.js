@@ -62,10 +62,10 @@ const Accounts = () => {
           <tbody>
             {user.accounts.map((account) => {
               return (
-                <tr key={account.card._id}>
-                  <td>{account.card.name}</td>
-                  <td>$ {formatMoney(account.initial_balance)}</td>
-                  <td>$ {formatMoney(account.balance)}</td>
+                <tr key={account.id}>
+                  <td>{account.name}</td>
+                  <td>$ {formatMoney(account.initialBalance)}</td>
+                  <td>$ {formatMoney(account.currentBalance)}</td>
                   <td className="actions">
                     <span>Edit</span>
                   </td>
