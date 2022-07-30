@@ -29,6 +29,18 @@ const getNewDate = () => {
   return `${year}-${month}-${day}T00:00:00.000Z`;
 };
 
+const dateStringFromObject = (dateObject) => {
+  let date = dateObject;
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+
+  month = month < 10 ? `0${month}` : month;
+  day = day < 10 ? `0${day}` : day;
+
+  return `${year}-${month}-${day}T00:00:00.000Z`;
+};
+
 const getTomorrowDate = () => {
   let date = new Date();
   date.setDate(date.getDate() + 1);
@@ -48,8 +60,8 @@ const getStartAndEndDatesOfYearAndMonth = (year, month) => {
   let endDate = new Date(year, month, 0);
 
   return {
-    startDate,
-    endDate,
+    startDate: dateStringFromObject(startDate),
+    endDate: dateStringFromObject(endDate),
   };
 };
 
@@ -65,6 +77,7 @@ module.exports = {
   formatDateToString,
   getNewDate,
   getTomorrowDate,
+  dateStringFromObject,
   getStartAndEndDatesOfYearAndMonth,
   isDate1BeforeDate2,
 };

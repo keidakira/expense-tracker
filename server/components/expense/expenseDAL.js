@@ -87,7 +87,9 @@ const getFilteredExpensesByUserId = async (userId, year, month) => {
         $gte: startDate,
         $lte: endDate,
       },
-    }).populate("accountId");
+    })
+      .sort({ date: 1 })
+      .populate("accountId");
 
     return {
       success: true,

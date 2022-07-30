@@ -203,7 +203,7 @@ function Expenses() {
               <th>Account Name</th>
               <th>Money Spent this Month</th>
               <th>Money Gained this Month</th>
-              <th>Available Credit</th>
+              {/* <th>Available Credit</th> */}
             </tr>
           </thead>
           <tbody>
@@ -214,35 +214,64 @@ function Expenses() {
                     <td>{account.accountName}</td>
                     <td>
                       ${" "}
-                      {transactions
-                        .map((expense) => {
-                          if (expense.account.id === account.accountId) {
-                            return expense.debit;
-                          }
+                      {formatMoney(
+                        transactions
+                          .map((expense) => {
+                            if (expense.account.id === account.accountId) {
+                              return expense.debit;
+                            }
 
-                          return null;
-                        })
-                        .reduce((a, b) => a + b, 0)}
+                            return null;
+                          })
+                          .reduce((a, b) => a + b, 0)
+                      )}
                     </td>
                     <td>
                       ${" "}
-                      {transactions
-                        .map((expense) => {
-                          if (expense.account.id === account.accountId) {
-                            return expense.credit;
-                          }
+                      {formatMoney(
+                        transactions
+                          .map((expense) => {
+                            if (expense.account.id === account.accountId) {
+                              return expense.credit;
+                            }
 
-                          return null;
-                        })
-                        .reduce((a, b) => a + b, 0)}
+                            return null;
+                          })
+                          .reduce((a, b) => a + b, 0)
+                      )}
                     </td>
-                    <td>$ {formatMoney(account.currentBalance)}</td>
+                    {/* <td>$ {formatMoney(account.currentBalance)}</td> */}
                   </tr>
                 );
               })
             ) : (
               <tr>
-                <td colSpan="2">No accounts found</td>
+                <td colSpan="3">No accounts found</td>
+              </tr>
+            )}
+            {userAccounts.length && (
+              <tr>
+                <td>Total</td>
+                <td>
+                  ${" "}
+                  {formatMoney(
+                    transactions
+                      .map((expense) => {
+                        return expense.debit;
+                      })
+                      .reduce((a, b) => a + b, 0)
+                  )}
+                </td>
+                <td>
+                  ${" "}
+                  {formatMoney(
+                    transactions
+                      .map((expense) => {
+                        return expense.credit;
+                      })
+                      .reduce((a, b) => a + b, 0)
+                  )}
+                </td>
               </tr>
             )}
           </tbody>
