@@ -24,12 +24,12 @@ const createExpense = (req, res, next) => {
         "string.empty": "accountId cannot be empty",
         "string.pattern.base": "accountId is not a valid account id",
       }),
-    credit: Joi.number().positive().required().messages({
+    credit: Joi.number().min(0).required().messages({
       "any.required": "credit is a required field",
       "number.empty": "credit cannot be empty",
       "number.positive": "credit must be positive",
     }),
-    debit: Joi.number().positive().required().messages({
+    debit: Joi.number().min(0).required().messages({
       "any.required": "debit is a required field",
       "number.empty": "debit cannot be empty",
       "number.positive": "debit must be positive",

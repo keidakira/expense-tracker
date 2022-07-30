@@ -35,6 +35,7 @@ const expenseSchema = new Schema({
   },
   notes: {
     type: String,
+    default: "",
   },
 });
 

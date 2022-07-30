@@ -178,6 +178,52 @@ const addAccount = async (id, account) => {
   }
 };
 
+// Expense related
+const updateUserAccountAfterAnExpense = async (
+  userId,
+  accountId,
+  credit,
+  debit
+) => {
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return {
+        data: null,
+        success: false,
+        message: "User does not exist",
+      };
+    }
+
+    const account = user.accounts.find((account) => {
+      return account.accountId.toString() === accountId;
+    });
+
+    if (!account) {
+      return {
+        data: null,
+        success: false,
+        message: "User does not have an account with this accountId",
+      };
+    }
+
+    account.currentBalance += credit - debit;
+    await user.save();
+
+    return {
+      data: generateUserObjectFromModelObject(user),
+      success: true,
+      message: "Account updated successfully",
+    };
+  } catch (error) {
+    return {
+      data: null,
+      success: false,
+      message: generateErrorMessageFromModelError(error),
+    };
+  }
+};
+
 module.exports = userDAL = {
   createUser,
   userEmailExists,
@@ -186,4 +232,5 @@ module.exports = userDAL = {
   getUserByEmail,
   verifyPasswordWithEmail,
   addAccount,
+  updateUserAccountAfterAnExpense,
 };

@@ -47,7 +47,7 @@ export const NewTransactionModal = ({
     setCredit("");
     setDebit("");
     setCategory("Shopping");
-    setAccount(accounts.length > 0 ? accounts[0].card._id : "");
+    setAccount(accounts.length > 0 ? accounts[0].accountId : "");
     setNotes("");
     setSelectedDate(getNewDate());
   };
@@ -83,16 +83,15 @@ export const NewTransactionModal = ({
 
   const createTransaction = async () => {
     const transaction = {
-      user: userId,
       date: selectedDate,
       credit: credit,
       debit: debit,
       category: category,
-      card: account,
+      accountId: account,
       notes: notes,
     };
 
-    let response = await fetch(`${HOST}/api/expenses`, {
+    let response = await fetch(`${HOST}/api/users/${userId}/expenses`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -132,8 +131,8 @@ export const NewTransactionModal = ({
           value={account}
         >
           {accounts.map((account, index) => (
-            <option key={index} value={account.card._id}>
-              {account.card.name}
+            <option key={index} value={account.accountId}>
+              {account.accountName}
             </option>
           ))}
         </Dropdown>
