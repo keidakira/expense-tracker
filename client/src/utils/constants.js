@@ -23,4 +23,4 @@ export const years = Array.from(
   (_, i) => startYear + i
 );
 
-export const HOST = "http://localhost:8081"; //"https://glacial-ocean-96095.herokuapp.com";
+export const HOST = "https://glacial-ocean-96095.herokuapp.com";
