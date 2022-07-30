@@ -41,7 +41,7 @@ const convertToInteger = (value) => {
 
 convertToDecimal = (value) => {
   if (value) {
-    return parseFloat(value);
+    return parseFloat(value.toFixed(2));
   }
 
   return 0.0;

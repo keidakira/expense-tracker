@@ -22,10 +22,10 @@ const Accounts = () => {
   useEffect(() => {
     const fetchData = async () => {
       const userJSON = JSON.parse(localStorage.getItem("user"));
-      const userId = userJSON.userId;
+      const userId = userJSON.id;
       const response = await fetch(`${HOST}/api/users/${userId}`);
       const body = await response.json();
-      setUser(body);
+      setUser(body.data);
       setIsLoading(false);
     };
 
@@ -33,7 +33,7 @@ const Accounts = () => {
   }, []);
 
   // Check if user is logged in
-  if (!window.localStorage.getItem("token")) {
+  if (!window.localStorage.getItem("user")) {
     window.location.href = "/";
   }
 

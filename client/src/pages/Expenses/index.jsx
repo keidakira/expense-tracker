@@ -29,7 +29,7 @@ function Expenses() {
   const getTransactionsButtonRef = useRef(null);
 
   // Check if user is logged in
-  if (!window.localStorage.getItem("token")) {
+  if (!window.localStorage.getItem("user")) {
     window.location.href = "/";
   }
 
@@ -39,26 +39,28 @@ function Expenses() {
     if (userId === null) {
       // Get user id from localStorage
       const user = JSON.parse(window.localStorage.getItem("user"));
-      setUserId(user.userId);
+      setUserId(user.id);
       return;
     }
 
     const fetchData = async () => {
-      await fetch(`${HOST}/api/expenses/${selectedYear}/${selectedMonth}`)
+      await fetch(
+        `${HOST}/api/users/${userId}/expenses?year=${selectedYear}&month=${selectedMonth}`
+      )
         .then((res) => res.json())
         .then(
           (result) => {
-            setTransactions(result);
+            setTransactions(result.data);
           },
           (error) => {
-            console.log(error);
+            console.log(error.message);
           }
         );
 
       await fetch(`${HOST}/api/users/${userId}`)
         .then((res) => res.json())
         .then((result) => {
-          setUserAccounts(result.accounts);
+          setUserAccounts(result.data.accounts);
         });
     };
 

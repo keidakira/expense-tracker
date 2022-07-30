@@ -5,8 +5,8 @@ import React from "react";
 
 const Logout = () => {
   // Check if user is logged in
-  if (window.localStorage.getItem("token")) {
-    window.localStorage.removeItem("token");
+  if (window.localStorage.getItem("user")) {
+    window.localStorage.removeItem("user");
     window.localStorage.removeItem("user");
   }
 

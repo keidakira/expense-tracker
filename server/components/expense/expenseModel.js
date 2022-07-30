@@ -1,7 +1,13 @@
+/**
+ * Expense Model
+ *
+ * This file contains the model and schema for the expense.
+ */
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const expenseSchema = new mongoose.Schema({
-  user: {
+const expenseSchema = new Schema({
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
@@ -10,9 +16,9 @@ const expenseSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  card: {
+  accountId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Card",
+    ref: "Account",
     required: true,
   },
   credit: {

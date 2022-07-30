@@ -18,7 +18,12 @@ const md5 = (string, salt = false) => {
     .digest("hex");
 };
 
+const hashPassword = (password) => {
+  return sha256(md5(password, (salt = true)));
+};
+
 module.exports = {
   sha256,
   md5,
+  hashPassword,
 };
