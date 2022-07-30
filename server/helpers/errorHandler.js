@@ -3,8 +3,9 @@
  *
  * This file handles all sorts of errors that may occur in the application.
  */
-const generateErrorMessageFromModelError = ({ errors }) => {
-  console.log("Errors are: ", errors);
+const generateErrorMessageFromModelError = (error) => {
+  console.log("Errors are: ", error);
+  const { errors } = error;
   let errorMessages = [];
   for ([key, value] of Object.entries(errors)) {
     errorMessages.push({ name: key, message: value.message });
