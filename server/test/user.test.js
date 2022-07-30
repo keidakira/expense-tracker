@@ -516,5 +516,53 @@ describe("Users Test", () => {
         .expect(response.body.message)
         .to.equal("User already has an account with this accountId");
     }).timeout(500);
+
+    /**
+   * Get user details when user has an account attached to the profile,
+   * then GET /api/users/:id will return the response:
+   * Status: 200
+   * {
+        "error": false,
+        "data": {
+            "id": "62e1e0a44e047c284526b6bc",
+            "name": "John Doe",
+            "email": "test@test.com",
+            "accounts": [
+                {
+                    "accountId": "62e1e0a44e047c284526b6b8",
+                    "accountName": "Bank of America",
+                    "initialBalance": 123,
+                    "currentBalance": 123,
+                    "dateOfInitialBalance": "2021-07-26T00:00:00.000Z",
+                }
+            ]
+        },
+        "message": "User retrieved successfully"
+    }
+   */
+    it("should return success message saying user retrieved successfully", async () => {
+      const response = await supertest(app).get("/api/users/" + userId);
+
+      chai.expect(response.statusCode).to.equal(200);
+      chai.expect(response.body.error).to.be.false;
+      chai.expect(response.body.data).to.be.an("object");
+      chai.expect(response.body.data.id).to.be.a("string");
+      chai.expect(response.body.data.name).to.equal("John Doe");
+      chai.expect(response.body.data.email).to.equal("test@test.com");
+      chai.expect(response.body.data.accounts).to.be.an("array");
+      chai.expect(response.body.data.accounts[0].accountId).to.be.a("string");
+      chai.expect(response.body.data.accounts[0].accountId).to.equal(accountId);
+      chai
+        .expect(response.body.data.accounts[0].accountName)
+        .to.equal("Bank of America");
+      chai.expect(response.body.data.accounts[0].initialBalance).to.equal(1412);
+      chai.expect(response.body.data.accounts[0].currentBalance).to.equal(1412);
+      chai
+        .expect(response.body.data.accounts[0].dateOfInitialBalance)
+        .to.equal(getNewDate());
+      chai
+        .expect(response.body.message)
+        .to.equal("User retrieved successfully");
+    }).timeout(500);
   }); // describe ends
 });

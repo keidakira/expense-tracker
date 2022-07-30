@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import Modal from "../../Modal";
 import Input from "../../Input";
-import Textarea from "../../Textarea";
 import Dropdown from "../../Dropdown";
-
-import categories from "../../../data/categories.json";
 
 import { getNewDate } from "../../../utils/date";
 import { HOST } from "../../../utils/constants";
@@ -13,18 +10,15 @@ import { HOST } from "../../../utils/constants";
 const user = localStorage.getItem("user");
 const userId = user ? JSON.parse(user).id : null;
 
-export const NewTransactionModal = ({
+export const NewAccountModal = ({
   isModalOpen,
   toggleModal: setIsModalOpen,
   afterModalClose,
 }) => {
   const [selectedDate, setSelectedDate] = useState(getNewDate());
   const [credit, setCredit] = useState("");
-  const [debit, setDebit] = useState("");
-  const [category, setCategory] = useState("Shopping");
   const [account, setAccount] = useState("");
   const [accounts, setAccounts] = useState([]);
-  const [notes, setNotes] = useState("");
 
   useEffect(() => {
     clearForm();
@@ -32,23 +26,19 @@ export const NewTransactionModal = ({
 
   const clearForm = () => {
     // Get all cards of the user
-    const getUserCards = async (userId) => {
-      const response = await fetch(`${HOST}/api/users/${userId}`);
+    const getUserCards = async () => {
+      const response = await fetch(`${HOST}/api/accounts`);
 
-      const { data } = await response.json();
-      return data.accounts;
+      return await response.json();
     };
 
     getUserCards(userId).then((accounts) => {
-      setAccounts(accounts);
+      setAccounts(accounts.data);
     });
 
     // Clear the form
     setCredit("");
-    setDebit("");
-    setCategory("Shopping");
-    setAccount(accounts.length > 0 ? accounts[0].accountId : "");
-    setNotes("");
+    setAccount(accounts.length > 0 ? accounts[0].id : "");
     setSelectedDate(getNewDate());
   };
 
@@ -63,17 +53,8 @@ export const NewTransactionModal = ({
       case "credit":
         setCredit(value);
         break;
-      case "debit":
-        setDebit(value);
-        break;
-      case "category":
-        setCategory(value);
-        break;
       case "account":
         setAccount(value);
-        break;
-      case "notes":
-        setNotes(value);
         break;
       default:
         alert("Something went wrong");
@@ -81,17 +62,15 @@ export const NewTransactionModal = ({
     }
   };
 
-  const createTransaction = async () => {
+  const addAccountToUser = async () => {
     const transaction = {
-      date: selectedDate,
-      credit: credit,
-      debit: debit,
-      category: category,
       accountId: account,
-      notes: notes,
+      initialBalance: credit,
+      dateOfInitialBalance: selectedDate,
     };
+    console.log(transaction);
 
-    let response = await fetch(`${HOST}/api/users/${userId}/expenses`, {
+    let response = await fetch(`${HOST}/api/users/${userId}/accounts`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -110,20 +89,12 @@ export const NewTransactionModal = ({
 
   return (
     <Modal
-      title={"Add a new transaction"}
+      title={"Add a new account"}
       isOpen={isModalOpen}
-      okAction={createTransaction}
+      okAction={addAccountToUser}
       onClose={(e) => setIsModalOpen(!isModalOpen)}
     >
       <div className="row">
-        <Input
-          type="date"
-          placeholder="Date"
-          name="date"
-          label="Date"
-          value={selectedDate}
-          onChange={handleChange}
-        />
         <Dropdown
           onChange={handleChange}
           name="account"
@@ -131,8 +102,8 @@ export const NewTransactionModal = ({
           value={account}
         >
           {accounts.map((account, index) => (
-            <option key={index} value={account.accountId}>
-              {account.accountName}
+            <option key={index} value={account.id}>
+              {account.name}
             </option>
           ))}
         </Dropdown>
@@ -140,7 +111,7 @@ export const NewTransactionModal = ({
       <div className="row">
         <Input
           type="text"
-          placeholder="Credit"
+          placeholder="Current Credit"
           name="credit"
           label="Credit"
           className="text-right"
@@ -148,36 +119,11 @@ export const NewTransactionModal = ({
           onChange={handleChange}
         />
         <Input
-          type="text"
-          placeholder="Debit"
-          name="debit"
-          label="Debit"
-          className="text-right"
-          value={debit}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="row">
-        <Dropdown
-          onChange={handleChange}
-          name="category"
-          label="Category"
-          value={category}
-        >
-          {categories.map((category, index) => (
-            <option key={index} value={category}>
-              {category}
-            </option>
-          ))}
-        </Dropdown>
-      </div>
-      <div>
-        <Textarea
-          type="textarea"
-          placeholder="Notes"
-          name="notes"
-          label="Notes"
-          value={notes}
+          type="date"
+          placeholder="Date"
+          name="date"
+          label="Date"
+          value={selectedDate}
           onChange={handleChange}
         />
       </div>

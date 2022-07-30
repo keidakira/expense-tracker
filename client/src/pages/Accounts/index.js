@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 
 // Custom components
 import Navbar from "../../components/Navbar";
+import addIcon from "../../images/icons/add-400.svg";
 
 // Stylesheet
 import "./styles.css";
@@ -10,18 +11,21 @@ import "./styles.css";
 // Utils
 import { HOST } from "../../utils/constants";
 import { formatMoney } from "../../utils/mathf";
+import IconButton from "../../components/IconButton";
+import { NewAccountModal } from "../../components/Modals/NewAccountModal";
 
 const Accounts = () => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       const userJSON = JSON.parse(localStorage.getItem("user"));
-      const userId = userJSON.userId;
+      const userId = userJSON.id;
       const response = await fetch(`${HOST}/api/users/${userId}`);
       const body = await response.json();
-      setUser(body);
+      setUser(body.data);
       setIsLoading(false);
     };
 
@@ -29,7 +33,7 @@ const Accounts = () => {
   }, []);
 
   // Check if user is logged in
-  if (!window.localStorage.getItem("token")) {
+  if (!window.localStorage.getItem("user")) {
     window.location.href = "/";
   }
 
@@ -57,11 +61,13 @@ const Accounts = () => {
           </thead>
           <tbody>
             {user.accounts.map((account) => {
+              const { accountId, accountName, initialBalance, currentBalance } =
+                account;
               return (
-                <tr>
-                  <td>{account.card.name}</td>
-                  <td>$ {formatMoney(account.initial_balance)}</td>
-                  <td>$ {formatMoney(account.balance)}</td>
+                <tr key={accountId} id={accountId}>
+                  <td>{accountName}</td>
+                  <td>$ {formatMoney(initialBalance)}</td>
+                  <td>$ {formatMoney(currentBalance)}</td>
                   <td className="actions">
                     <span>Edit</span>
                   </td>
@@ -71,6 +77,16 @@ const Accounts = () => {
           </tbody>
         </table>
       </div>
+      <div className="add-account">
+        <IconButton icon={addIcon} onClick={(e) => setIsModalOpen(true)}>
+          <span>Add Account</span>
+        </IconButton>
+      </div>
+      <NewAccountModal
+        isModalOpen={isModalOpen}
+        toggleModal={setIsModalOpen}
+        afterModalClose={() => window.location.reload()}
+      />
     </div>
   );
 };

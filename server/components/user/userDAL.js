@@ -16,11 +16,21 @@ const {
 
 // Data abstraction functions
 const generateUserObjectFromModelObject = (userModelObject) => {
+  const accounts = userModelObject.accounts.map((account) => {
+    return {
+      accountId: account.accountId._id,
+      accountName: account.accountId.name,
+      initialBalance: account.initialBalance,
+      currentBalance: account.currentBalance,
+      dateOfInitialBalance: account.dateOfInitialBalance,
+    };
+  });
+
   return {
     id: userModelObject._id,
     name: userModelObject.name,
     email: userModelObject.email,
-    accounts: userModelObject.accounts,
+    accounts,
   };
 };
 
@@ -63,7 +73,9 @@ const createUser = async (user) => {
 
 const getUser = async (id) => {
   try {
-    const user = await User.findById(id, fieldsToOmit);
+    const user = await User.findById(id, fieldsToOmit).populate(
+      "accounts.accountId"
+    );
     return {
       data: generateUserObjectFromModelObject(user),
       success: true,
@@ -166,6 +178,52 @@ const addAccount = async (id, account) => {
   }
 };
 
+// Expense related
+const updateUserAccountAfterAnExpense = async (
+  userId,
+  accountId,
+  credit,
+  debit
+) => {
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return {
+        data: null,
+        success: false,
+        message: "User does not exist",
+      };
+    }
+
+    const account = user.accounts.find((account) => {
+      return account.accountId.toString() === accountId;
+    });
+
+    if (!account) {
+      return {
+        data: null,
+        success: false,
+        message: "User does not have an account with this accountId",
+      };
+    }
+
+    account.currentBalance += credit - debit;
+    await user.save();
+
+    return {
+      data: generateUserObjectFromModelObject(user),
+      success: true,
+      message: "Account updated successfully",
+    };
+  } catch (error) {
+    return {
+      data: null,
+      success: false,
+      message: generateErrorMessageFromModelError(error),
+    };
+  }
+};
+
 module.exports = userDAL = {
   createUser,
   userEmailExists,
@@ -174,4 +232,5 @@ module.exports = userDAL = {
   getUserByEmail,
   verifyPasswordWithEmail,
   addAccount,
+  updateUserAccountAfterAnExpense,
 };

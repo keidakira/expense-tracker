@@ -12,16 +12,28 @@ const { getStartAndEndDatesOfYearAndMonth } = require("../../utils/date");
 
 // Data abstraction functions
 const generateExpenseObjectFromModelObject = (expenseModelObject) => {
+  const account = {
+    id: expenseModelObject.accountId._id,
+    name: expenseModelObject.accountId.name,
+    color: expenseModelObject.accountId.color,
+  };
+
   return {
     id: expenseModelObject._id,
     userId: expenseModelObject.userId,
-    accountId: expenseModelObject.accountId,
+    account,
     credit: expenseModelObject.credit,
     debit: expenseModelObject.debit,
     category: expenseModelObject.category,
     notes: expenseModelObject.notes,
     date: expenseModelObject.date,
   };
+};
+
+const convertModelObjectsToObjects = (modelObjects) => {
+  return modelObjects.map((modelObject) => {
+    return generateExpenseObjectFromModelObject(modelObject);
+  });
 };
 
 const fieldsToOmit = "-__v";
@@ -31,10 +43,10 @@ const fieldsToOmit = "-__v";
 // CRUD operations
 const getAllExpenses = async () => {
   try {
-    const expenses = await Expense.find({}, fieldsToOmit);
+    const expenses = await Expense.find({}, fieldsToOmit).populate("accountId");
     return {
       success: true,
-      data: generateExpenseObjectFromModelObject(expenses),
+      data: convertModelObjectsToObjects(expenses),
       message: "Expenses retrieved successfully",
     };
   } catch (error) {
@@ -48,10 +60,12 @@ const getAllExpenses = async () => {
 
 const getAllExpensesByUserId = async (userId) => {
   try {
-    const expenses = await Expense.find({ userId }, fieldsToOmit);
+    const expenses = await Expense.find({ userId }, fieldsToOmit).populate(
+      "accountId"
+    );
     return {
       success: true,
-      data: expenses,
+      data: convertModelObjectsToObjects(expenses),
       message: "Expenses retrieved successfully",
     };
   } catch (error) {
@@ -73,11 +87,11 @@ const getFilteredExpensesByUserId = async (userId, year, month) => {
         $gte: startDate,
         $lte: endDate,
       },
-    });
+    }).populate("accountId");
 
     return {
       success: true,
-      data: expenses,
+      data: convertModelObjectsToObjects(expenses),
       message: "Expenses retrieved successfully",
     };
   } catch (error) {

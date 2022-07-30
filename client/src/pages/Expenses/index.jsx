@@ -28,8 +28,10 @@ function Expenses() {
 
   const getTransactionsButtonRef = useRef(null);
 
+  let expenses = [];
+
   // Check if user is logged in
-  if (!window.localStorage.getItem("token")) {
+  if (!window.localStorage.getItem("user")) {
     window.location.href = "/";
   }
 
@@ -39,26 +41,28 @@ function Expenses() {
     if (userId === null) {
       // Get user id from localStorage
       const user = JSON.parse(window.localStorage.getItem("user"));
-      setUserId(user.userId);
+      setUserId(user.id);
       return;
     }
 
     const fetchData = async () => {
-      await fetch(`${HOST}/api/expenses/${selectedYear}/${selectedMonth}`)
+      await fetch(
+        `${HOST}/api/users/${userId}/expenses?year=${selectedYear}&month=${selectedMonth}`
+      )
         .then((res) => res.json())
         .then(
           (result) => {
-            setTransactions(result);
+            setTransactions(result.data);
           },
           (error) => {
-            console.log(error);
+            console.log(error.message);
           }
         );
 
       await fetch(`${HOST}/api/users/${userId}`)
         .then((res) => res.json())
         .then((result) => {
-          setUserAccounts(result.accounts);
+          setUserAccounts(result.data.accounts);
         });
     };
 
@@ -66,7 +70,6 @@ function Expenses() {
 
     if (transactions) {
       // Convert array of expenses into array of objects => {id, date, expenses}
-      let expenses = [];
       let seen = new Set();
       transactions.forEach((expense) => {
         if (seen.has(expense.date)) {
@@ -146,7 +149,7 @@ function Expenses() {
               <th name="account">Account Name</th>
               <th name="credit">Credit</th>
               <th name="debit">Debit</th>
-              <th name="balance">Running Balance</th>
+              {/* <th name="balance">Running Balance</th> */}
               <th>Category</th>
               <th name="notes">Notes</th>
             </tr>
@@ -157,7 +160,7 @@ function Expenses() {
                 let number_of_expenses = expenses.length;
                 return expenses.map((expense, index) => {
                   return (
-                    <tr key={expense._id}>
+                    <tr key={expense.id}>
                       {number_of_expenses > 1 ? (
                         index === 0 && (
                           <td name="date" rowSpan={number_of_expenses}>
@@ -170,15 +173,15 @@ function Expenses() {
                       <td
                         name="account"
                         style={{
-                          backgroundColor: expense.card.color,
+                          backgroundColor: expense.account.color,
                           color: "white",
                         }}
                       >
-                        {expense.card.name}
+                        {expense.account.name}
                       </td>
                       <td name="credit">$ {formatMoney(expense.credit)}</td>
                       <td name="debit">$ {formatMoney(expense.debit)}</td>
-                      <td name="balance">$ {formatMoney(expense.balance)}</td>
+                      {/* <td name="balance">$ {formatMoney(expense.balance)}</td> */}
                       <td>{expense.category}</td>
                       <td name="notes">{expense.notes}</td>
                     </tr>
@@ -198,6 +201,8 @@ function Expenses() {
           <thead>
             <tr>
               <th>Account Name</th>
+              <th>Money Spent this Month</th>
+              <th>Money Gained this Month</th>
               <th>Available Credit</th>
             </tr>
           </thead>
@@ -205,9 +210,33 @@ function Expenses() {
             {userAccounts.length ? (
               userAccounts.map((account) => {
                 return (
-                  <tr key={account._id}>
-                    <td>{account.card.name}</td>
-                    <td>$ {formatMoney(account.balance)}</td>
+                  <tr key={account.accountId}>
+                    <td>{account.accountName}</td>
+                    <td>
+                      ${" "}
+                      {transactions
+                        .map((expense) => {
+                          if (expense.account.id === account.accountId) {
+                            return expense.debit;
+                          }
+
+                          return null;
+                        })
+                        .reduce((a, b) => a + b, 0)}
+                    </td>
+                    <td>
+                      ${" "}
+                      {transactions
+                        .map((expense) => {
+                          if (expense.account.id === account.accountId) {
+                            return expense.credit;
+                          }
+
+                          return null;
+                        })
+                        .reduce((a, b) => a + b, 0)}
+                    </td>
+                    <td>$ {formatMoney(account.currentBalance)}</td>
                   </tr>
                 );
               })

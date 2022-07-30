@@ -7,6 +7,8 @@
 const expenseDAL = require("./expenseDAL");
 const { apiResponse, HTTP_STATUS } = require("../../helpers/apiResponse");
 
+const userDAL = require("../user/userDAL");
+
 // CRUD operations
 const getAllExpenses = async (req, res, next) => {
   try {
@@ -18,7 +20,22 @@ const getAllExpenses = async (req, res, next) => {
 };
 
 const createExpense = async (req, res, next) => {
+  req.body.userId = req.params.id;
   const { data, success, message } = await expenseDAL.createExpense(req.body);
+  const userUpdationResponse = await userDAL.updateUserAccountAfterAnExpense(
+    req.body.userId,
+    req.body.accountId,
+    req.body.credit,
+    req.body.debit
+  );
+
+  if (!userUpdationResponse.success) {
+    return apiResponse.error(
+      res,
+      HTTP_STATUS.BAD_REQUEST,
+      userUpdationResponse.message
+    );
+  }
 
   if (success) {
     apiResponse.success(res, HTTP_STATUS.CREATED, data, message);
