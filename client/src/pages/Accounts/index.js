@@ -18,6 +18,7 @@ const Accounts = () => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userExpenses, setUserExpenses] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,6 +27,13 @@ const Accounts = () => {
       const response = await fetch(`${HOST}/api/users/${userId}`);
       const body = await response.json();
       setUser(body.data);
+
+      const expensesResponse = await fetch(
+        `${HOST}/api/users/${userId}/expenses`
+      );
+      const expensesBody = await expensesResponse.json();
+      setUserExpenses(expensesBody.data);
+
       setIsLoading(false);
     };
 
@@ -55,19 +63,57 @@ const Accounts = () => {
             <tr>
               <th>Account</th>
               <th>Initial Credit</th>
+              <th>Total money Credited</th>
+              <th>Total money Debited</th>
               <th>Current Credit</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {user.accounts.map((account) => {
-              const { accountId, accountName, initialBalance, currentBalance } =
-                account;
+              const { accountId, accountName, initialBalance } = account;
+              const accountExpensesCredit = userExpenses.map((expense) => {
+                if (expense.account.id === accountId) {
+                  return expense.credit;
+                }
+
+                return null;
+              });
+
+              const accountExpensesDebit = userExpenses.map((expense) => {
+                if (expense.account.id === accountId) {
+                  return expense.debit;
+                }
+
+                return null;
+              });
+
+              const totalMoneySpentByAccount = accountExpensesDebit.reduce(
+                (acc, curr) => {
+                  return acc + curr;
+                },
+                0
+              );
+
+              const totalMoneyCreditedIntoAccount =
+                accountExpensesCredit.reduce((acc, curr) => {
+                  return acc + curr;
+                }, 0);
+
               return (
                 <tr key={accountId} id={accountId}>
                   <td>{accountName}</td>
                   <td>$ {formatMoney(initialBalance)}</td>
-                  <td>$ {formatMoney(currentBalance)}</td>
+                  <td>$ {formatMoney(totalMoneyCreditedIntoAccount)}</td>
+                  <td>$ {formatMoney(totalMoneySpentByAccount)}</td>
+                  <td>
+                    ${" "}
+                    {formatMoney(
+                      initialBalance -
+                        totalMoneySpentByAccount +
+                        totalMoneyCreditedIntoAccount
+                    )}
+                  </td>
                   <td className="actions">
                     <span>Edit</span>
                   </td>
