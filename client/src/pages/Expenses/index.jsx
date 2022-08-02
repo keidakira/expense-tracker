@@ -4,7 +4,7 @@ import Dropdown from "../../components/Dropdown";
 import Button from "../../components/Button";
 import IconButton from "../../components/IconButton";
 
-import addIcon from "../../images/icons/add-400.svg";
+import { MdAdd } from "react-icons/md";
 import "./style.css";
 
 import { HOST, months, years } from "../../utils/constants";
@@ -112,22 +112,14 @@ function Expenses() {
     <div className="App">
       <Navbar active="expenses" />
       <div className="transactions-selection">
-        <Dropdown
-          onChange={handleMonthChange}
-          selected={selectedMonth}
-          maxWidth={180}
-        >
+        <Dropdown onChange={handleMonthChange} selected={selectedMonth}>
           {months.map((month, index) => (
             <option key={index} value={index + 1}>
               {month}
             </option>
           ))}
         </Dropdown>
-        <Dropdown
-          onChange={handleYearChange}
-          selected={selectedYear}
-          maxWidth={180}
-        >
+        <Dropdown onChange={handleYearChange} selected={selectedYear}>
           {years.map((year, index) => (
             <option key={index} value={year}>
               {year}
@@ -138,7 +130,7 @@ function Expenses() {
           onClick={handleGetTransactions}
           refer={getTransactionsButtonRef}
         >
-          <span>Get transactions</span>
+          <span>Get expenses</span>
         </Button>
       </div>
       <div className="transactions">
@@ -149,8 +141,7 @@ function Expenses() {
               <th name="account">Account Name</th>
               <th name="credit">Credit</th>
               <th name="debit">Debit</th>
-              {/* <th name="balance">Running Balance</th> */}
-              <th>Category</th>
+              <th name="category">Category</th>
               <th name="notes">Notes</th>
             </tr>
           </thead>
@@ -181,8 +172,7 @@ function Expenses() {
                       </td>
                       <td name="credit">$ {formatMoney(expense.credit)}</td>
                       <td name="debit">$ {formatMoney(expense.debit)}</td>
-                      {/* <td name="balance">$ {formatMoney(expense.balance)}</td> */}
-                      <td>{expense.category}</td>
+                      <td name="category">{expense.category}</td>
                       <td name="notes">{expense.notes}</td>
                     </tr>
                   );
@@ -203,7 +193,6 @@ function Expenses() {
               <th>Account Name</th>
               <th>Money Spent this Month</th>
               <th>Money Gained this Month</th>
-              {/* <th>Available Credit</th> */}
             </tr>
           </thead>
           <tbody>
@@ -240,7 +229,6 @@ function Expenses() {
                           .reduce((a, b) => a + b, 0)
                       )}
                     </td>
-                    {/* <td>$ {formatMoney(account.currentBalance)}</td> */}
                   </tr>
                 );
               })
@@ -249,7 +237,7 @@ function Expenses() {
                 <td colSpan="3">No accounts found</td>
               </tr>
             )}
-            {userAccounts.length && (
+            {userAccounts.length ? (
               <tr>
                 <td>Total</td>
                 <td>
@@ -273,16 +261,16 @@ function Expenses() {
                   )}
                 </td>
               </tr>
-            )}
+            ) : null}
           </tbody>
         </table>
       </div>
       <div className="add-transaction">
         <IconButton
-          icon={addIcon}
+          IconElement={MdAdd}
           onClick={(e) => setIsModalOpen(!isModalOpen)}
         >
-          <span>Add transaction</span>
+          <span>Add expense</span>
         </IconButton>
       </div>
       <NewTransactionModal

@@ -12,6 +12,7 @@ import Expenses from "./pages/Expenses";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Logout from "./pages/Logout";
 import Accounts from "./pages/Accounts";
+import { AddExpense } from "./pages/add-expense";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/" element={<Login />} />
         <Route path="/expenses" element={<Expenses />} />
         <Route path="/accounts" element={<Accounts />} />
+        <Route path="/add-expense" element={<AddExpense />} />
         <Route path="/logout" element={<Logout />} />
       </Routes>
     </BrowserRouter>

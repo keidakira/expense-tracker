@@ -37,3 +37,59 @@
 .navbar-menu .active {
   background-color: var(--primaryColorHoverGlass);
 }
+
+.navbar-menu .more-items {
+  display: none;
+}
+
+.navbar-mobile-sidebar-menu {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .navbar-menu > * {
+    display: none;
+  }
+
+  .navbar-menu .more-items {
+    display: block;
+    padding: 0.4rem;
+  }
+
+  .navbar-mobile-sidebar-menu.show {
+    width: 100%;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+  }
+
+  .navbar-mobile-sidebar-menu a {
+    font-size: 1.5rem;
+    padding: 0.8rem 1.6rem;
+    margin-bottom: 0.4rem;
+    text-decoration: none;
+    color: var(--primaryColor);
+  }
+
+  .navbar-mobile-sidebar-menu .close-btn {
+    position: fixed;
+    bottom: 4rem;
+    background-color: var(--primaryColor);
+    color: white;
+    border-radius: 100%;
+    font-size: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0.3rem;
+  }
+
+  .add-transaction {
+    display: none;
+  }
+}

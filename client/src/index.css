@@ -38,6 +38,10 @@ code {
   justify-content: center;
 }
 
+.no-scroll {
+  overflow: hidden;
+}
+
 /* Variables */
 :root {
   --primaryColor: #a074ff;
