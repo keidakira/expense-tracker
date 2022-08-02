@@ -7,11 +7,19 @@ import "./style.css";
 // Library Imports
 import React from "react";
 
-const IconButton = ({ children, icon, className, onClick, ...props }) => (
-  <button className={className} onClick={onClick} {...props}>
-    <img src={icon} alt="icon" width={16} />
-    {children}
-  </button>
-);
+const IconButton = ({
+  children,
+  IconElement,
+  className,
+  onClick,
+  ...props
+}) => {
+  return (
+    <button className={className} onClick={onClick} {...props}>
+      <IconElement />
+      {children}
+    </button>
+  );
+};
 
 export default IconButton;

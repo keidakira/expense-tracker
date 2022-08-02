@@ -7,6 +7,10 @@
   border-bottom: 1px solid var(--borderColor);
 }
 
+.transactions-selection .select {
+  width: 180px;
+}
+
 .add-transaction {
   position: fixed;
   bottom: 8px;
@@ -40,4 +44,43 @@ td[name="actions"] span[name="delete"] {
 /* Balances List */
 .balances-list {
   padding: 2rem;
+  margin-bottom: 4rem;
+}
+
+.balances-list table td {
+  text-align: right;
+}
+
+.balances-list table td:first-child {
+  text-align: center;
+}
+
+.balances-list table tr:last-child {
+  font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+  th[name="notes"],
+  th[name="category"],
+  td[name="notes"],
+  td[name="category"] {
+    display: none;
+  }
+
+  .balances-list {
+    padding: 0;
+    margin: 2rem 0 6rem 0;
+  }
+
+  .transactions-selection .select {
+    width: 100%;
+  }
+
+  .transactions-selection button {
+    width: calc(100% - 16px);
+  }
+
+  .transactions-selection {
+    flex-direction: column;
+  }
 }

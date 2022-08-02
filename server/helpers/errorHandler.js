@@ -4,7 +4,6 @@
  * This file handles all sorts of errors that may occur in the application.
  */
 const generateErrorMessageFromModelError = (error) => {
-  console.log("Errors are: ", error);
   const { errors } = error;
   let errorMessages = [];
   for ([key, value] of Object.entries(errors)) {
@@ -15,7 +14,6 @@ const generateErrorMessageFromModelError = (error) => {
 };
 
 const generateErrorMessageFromJoiError = ({ details }) => {
-  console.log("Error details are: ", details);
   let errorMessages = [];
   // TODO: sometimes single name has multiple messages, allow only one
   for (let i = 0; i < details.length; i++) {

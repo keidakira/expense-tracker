@@ -1,0 +1,11 @@
+.add-expense {
+  padding: 32px 0;
+}
+
+.add-expense button {
+  width: calc(100% - 16px);
+}
+
+.row:first-child .input:first-child input {
+  min-width: calc(100% - 32px);
+}
