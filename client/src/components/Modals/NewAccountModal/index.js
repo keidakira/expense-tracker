@@ -68,7 +68,6 @@ export const NewAccountModal = ({
       initialBalance: credit,
       dateOfInitialBalance: selectedDate,
     };
-    console.log(transaction);
 
     let response = await fetch(`${HOST}/api/users/${userId}/accounts`, {
       method: "POST",

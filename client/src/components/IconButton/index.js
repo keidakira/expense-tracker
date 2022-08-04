@@ -16,7 +16,6 @@ const IconButton = ({
 }) => {
   return (
     <button className={className} onClick={onClick} {...props}>
-      <IconElement />
       {children}
     </button>
   );

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import Dropdown from "../../components/Dropdown";
 import Button from "../../components/Button";
-import IconButton from "../../components/IconButton";
 
 import { MdAdd } from "react-icons/md";
 import "./style.css";
@@ -266,12 +265,10 @@ function Expenses() {
         </table>
       </div>
       <div className="add-transaction">
-        <IconButton
-          IconElement={MdAdd}
-          onClick={(e) => setIsModalOpen(!isModalOpen)}
-        >
+        <Button onClick={(e) => setIsModalOpen(!isModalOpen)}>
+          <MdAdd />
           <span>Add expense</span>
-        </IconButton>
+        </Button>
       </div>
       <NewTransactionModal
         isModalOpen={isModalOpen}

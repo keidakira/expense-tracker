@@ -8,6 +8,9 @@ button {
   margin: 4px 8px;
   color: white;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 button:hover {

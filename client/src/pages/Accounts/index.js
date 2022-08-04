@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 
 // Custom components
 import Navbar from "../../components/Navbar";
-import addIcon from "../../images/icons/add-400.svg";
+
+import { MdAdd } from "react-icons/md";
 
 // Stylesheet
 import "./styles.css";
@@ -11,7 +12,7 @@ import "./styles.css";
 // Utils
 import { HOST } from "../../utils/constants";
 import { formatMoney } from "../../utils/mathf";
-import IconButton from "../../components/IconButton";
+import Button from "../../components/Button";
 import { NewAccountModal } from "../../components/Modals/NewAccountModal";
 
 const Accounts = () => {
@@ -124,9 +125,10 @@ const Accounts = () => {
         </table>
       </div>
       <div className="add-account">
-        <IconButton icon={addIcon} onClick={(e) => setIsModalOpen(true)}>
+        <Button onClick={(e) => setIsModalOpen(true)}>
+          <MdAdd />
           <span>Add Account</span>
-        </IconButton>
+        </Button>
       </div>
       <NewAccountModal
         isModalOpen={isModalOpen}
